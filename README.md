@@ -50,6 +50,9 @@ images cat be stacked (left on top) in a 1:1 aspect ratio, or side by side (left
 on the left) in a 4:1 aspect ratio. Stereo images will be split into two
 temporary left and right eye images with a 2:1 aspect ratio.
 
+You can view all of these images in the [archviz-vr-tools Google Photo
+album](https://photos.app.goo.gl/o4oUkH1tRV9tmzsMA), including the [Stereoscopic VR Image](https://photos.app.goo.gl/uk86WRRDJJUQxmNK8) using a Cardboard or Daydream headset.
+
 #### Left or Right Eye
 ![test-left.jpg](test/test-left.jpg)
 
