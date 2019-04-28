@@ -1,0 +1,16 @@
+os: linux
+dist: xenial
+language: python
+python:
+  - "3.7"
+# command to install dependencies
+install:
+  - sudo apt-get install exempi
+  - pip3 install pillow python-xmp-toolkit
+# command to run tests
+script:
+  - ./mkvrjpg.py test/test-stereo-stacked.jpg
+  - ./mkvrjpg.py -s test/test-stereo-side-by-side.jpg
+  - ./mkvrjpg.py test/test-left.jpg test/test-right.jpg
+  - ./mkvrjpg.py -l test/test-left.jpg -r test/test-right.jpg
+# TODO: add the bad input tests
