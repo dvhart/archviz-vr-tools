@@ -1,6 +1,8 @@
 # archviz-vr-tools
 Collection of tools for architectural visualization virtual reality workflow optimization.
 
+![test.vr.jpg](test/test.vr.jpg)
+
 # mkvrjpg.py
 Some photorealistic rendering tools with create stere output, but they often come in simple image form which require some post processing to view them as photospheres or as stereoscopic photospheres in a VR headset.
 
@@ -47,6 +49,15 @@ Photospheres should be made up of two images with a 2:1 aspect ratio. Stereo
 images cat be stacked (left on top) in a 1:1 aspect ratio, or side by side (left
 on the left) in a 4:1 aspect ratio. Stereo images will be split into two
 temporary left and right eye images with a 2:1 aspect ratio.
+
+#### Left or Right Eye
+![test-left.jpg](test/test-left.jpg)
+
+#### Stereo Stacked
+![test-stereo-stacked.jpg](test/test-stereo-stacked.jpg)
+
+#### Stereo Side by Side
+![test-stereo-side-by-side.jpg](test/test-stereo-side-by-side.jpg)
 
 ### Examples
 mkvrjpg.py will operate on either left and right eye image pairs or on single
