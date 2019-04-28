@@ -4,14 +4,13 @@ Collection of tools for architectural visualization virtual reality workflow opt
 ![test.vr.jpg](test/test.vr.jpg)
 
 # mkvrjpg.py
-Some photorealistic rendering tools with create stere output, but they often come in simple image form which require some post processing to view them as photospheres or as stereoscopic photospheres in a VR headset.
+Some photorealistic rendering tools create stereo output, but they may generate simple images which require some post processing to view them as photospheres or as stereoscopic photospheres in a VR headset.
 
-mkvrjpg.py assembles a stereoscopic jpeg image from left and right eye jpeg images.  These images can be separate files, or a single image with both images, either stacked (left on top) or side by side (left on the left). It sets the required XMP properties and embeds the two images which allows the image to be viewed in any image viewer (left eye image), as well as in photosphere viewers such as the Google Photos web viewer, and in stereoscopic VR viewers, such as Google Carboard and Google Daydream.
+mkvrjpg.py assembles a stereoscopic jpeg image from left and right eye jpeg images.  These images can be separate files, or a single image with both images, either stacked (left on top) or side by side (left on the left). It sets the required XMP properties and embeds the two images which allows the image to be viewed in any image viewer (left eye image), as well as in photosphere viewers such as the Google Photos web viewer, and in stereoscopic VR viewers, such as [Google Cardboard](https://vr.google.com/cardboard/) and [Google Daydream](https://vr.google.com/daydream/).
 
 ## Installation
 ### Mac OS
-You will first need to install python 3 and homebrew, see the respective links
-and follow the instructions to install before proceeding.
+You will first need to install [python 3](https://www.python.org/downloads/) and [Homebrew](https://brew.sh/), see the respective links and follow the installation instructions before proceeding.
 
 From a terminal, install the dependencies:
 ```
@@ -45,10 +44,7 @@ Usage: mkvrjpg.py [OPTIONS] [stereo_img || left_img right_img]
   -s, --stereo        stereo image
 ```
 ### Input
-Photospheres should be made up of two images with a 2:1 aspect ratio. Stereo
-images cat be stacked (left on top) in a 1:1 aspect ratio, or side by side (left
-on the left) in a 4:1 aspect ratio. Stereo images will be split into two
-temporary left and right eye images with a 2:1 aspect ratio.
+Photospheres should be made up of two images with a 2:1 aspect ratio. Stereo images cat be stacked (left on top) in a 1:1 aspect ratio, or side by side (left on the left) in a 4:1 aspect ratio. Stereo images will be split into two temporary left and right eye images with a 2:1 aspect ratio.
 
 You can view all of these images in the [archviz-vr-tools Google Photo
 album](https://photos.app.goo.gl/o4oUkH1tRV9tmzsMA), including the [Stereoscopic VR Image](https://photos.app.goo.gl/uk86WRRDJJUQxmNK8) using a Cardboard or Daydream headset.
@@ -94,7 +90,7 @@ VR Image saved to: /Users/dvhart/source/archviz-vr-tools/mkvrjpg-irgm8_98.vr.jpg
 
 #### Specify the output image
 You can specify the output filename with the `-o` option. Note that it must come
-before any position arguments, but can appear in any order relative to other
+before any positional arguments, but can appear in any order relative to other
 options. A `.vr.jpg` suffix is recommended for viewer compatibility.
 
 ```
