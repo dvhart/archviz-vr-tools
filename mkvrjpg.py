@@ -133,8 +133,6 @@ def split_stereo(stereo, left, right):
         left_img.save(left)
         right_img.save(right)
         stereo_img.close()
-        atexit.register(os.remove, left)
-        atexit.register(os.remove, right)
 
 
 def main():
@@ -201,8 +199,11 @@ def main():
         # Create the temporary left and right images
         fd, left = mkstemp("-left.jpg")
         os.close(fd)
+        atexit.register(os.remove, left)
+
         fd, right = mkstemp("-right.jpg")
         os.close(fd)
+        atexit.register(os.remove, right)
 
         split_stereo(stereo, left, right)
 
