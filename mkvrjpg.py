@@ -102,8 +102,10 @@ def make_vr_image(left, right, out):
     xmp.set_property(XMP_NS_TIFF, u'tiff:Make', 'mkvrjpg')
     xmp.set_property(XMP_NS_TIFF, u'tiff:Model', '')
 
-    add_gimage_xmp(xmp, left)
-    add_gimage_xmp(xmp, right)
+    if left:
+        add_gimage_xmp(xmp, left)
+    if right:
+        add_gimage_xmp(xmp, right)
 
     if xmpfile.can_put_xmp(xmp):
         xmpfile.put_xmp(xmp)
@@ -140,10 +142,11 @@ def main():
     right = None
     out = None
     stereo = None
+    mono = None
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hl:r:o:s:",
-                ["help","left=","right=","out=","stereo="])
+        opts, args = getopt.getopt(sys.argv[1:], "hl:r:o:s:m:",
+                ["help","left=","right=","out=","stereo=","mono="])
     except getopt.GetoptError as err:
         print(err)
         usage()
@@ -154,17 +157,17 @@ def main():
             usage()
             sys.exit(0)
         elif o in ('-s', '--stereo'):
-            if (left or right):
+            if (mono or left or right):
                 usage()
                 exit(1)
             stereo = a
         elif o in ('-l', '--left'):
-            if (stereo):
+            if (stereo or mono):
                 usage()
                 exit(1)
             left = a
         elif o in ('-r', '--right'):
-            if (stereo):
+            if (stereo or mono):
                 usage()
                 exit(1)
             right = a
@@ -173,12 +176,17 @@ def main():
             if os.path.exists(out):
                 print("Output file already exists: %s" % out)
                 exit(1)
+        elif o in ('-m', '--mono'):
+            if (stereo or left or right):
+                usage()
+                exit(1)
+            mono = a
         else:
             assert False, "unhandled option"
 
     # Verify we received either stereo or both the left and the right image
     # Verify the arguments are consistent
-    if not (stereo or (left and right)):
+    if not (mono or stereo or (left and right)):
         if len(args) == 1:
             stereo = args[0]
         elif len(args) == 2:
@@ -192,31 +200,36 @@ def main():
         usage()
         exit(1)
 
-    if (stereo):
-        if not check_image(stereo):
-            exit(1)
-
-        # Create the temporary left and right images
-        fd, left = mkstemp("-left.jpg")
-        os.close(fd)
-        atexit.register(os.remove, left)
-
-        fd, right = mkstemp("-right.jpg")
-        os.close(fd)
-        atexit.register(os.remove, right)
-
-        split_stereo(stereo, left, right)
-
-    if not check_image(left) or not check_image(right):
-        exit(1)
-
     # Create an output name if one is not provided
     if not out:
         fd, out = mkstemp('.vr.jpg', 'mkvrjpg-', os.getcwd())
         os.close(fd)
 
-    # Create an output image to start with
-    copyfile(left, out)
+    if mono:
+        if not check_image(mono):
+            exit(1)
+        copyfile(mono, out)
+    else:
+        if (stereo):
+            if not check_image(stereo):
+                exit(1)
+
+            # Create the temporary left and right images
+            fd, left = mkstemp("-left.jpg")
+            os.close(fd)
+            atexit.register(os.remove, left)
+
+            fd, right = mkstemp("-right.jpg")
+            os.close(fd)
+            atexit.register(os.remove, right)
+
+            split_stereo(stereo, left, right)
+
+        if not check_image(left) or not check_image(right):
+            exit(1)
+
+        # Create an output image to start with
+        copyfile(left, out)
 
     # Image files are ready go, create the vr image
     make_vr_image(left, right, out)
